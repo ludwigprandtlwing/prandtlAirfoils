@@ -1,0 +1,11 @@
+To check for a laminar transition bubble
+
+Plot the skin friction value.  If it is negative, the flow has reversed there.
+
+In OPER
+
+Go to VPlo to plot boundary layer parameters
+
+Use CF to plot skin friction coefficient
+
+If it is negative, that is where the the flow has reversed.

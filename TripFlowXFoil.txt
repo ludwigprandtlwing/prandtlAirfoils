@@ -1,0 +1,8 @@
+Go to OPER
+
+Then VPAR
+
+Then XTR
+
+This sets the x position where the flow is tripped to turbulent.
+Tripping the flow early increases drag by a significant amount.

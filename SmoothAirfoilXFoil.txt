@@ -1,0 +1,14 @@
+LOAD airfoil_filename
+MDES
+FILT
+! (repeats the previous FILT command)
+!
+.
+.
+EXEC
+
+PANE
+SAVE smoothed_airfoil_filename
+
+
+Type "!" as often as needed to smooth the airfoil sufficiently.
