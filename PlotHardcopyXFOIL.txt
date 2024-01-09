@@ -1,0 +1,8 @@
+Make a plot to postscript using XFOIL
+
+Execute the following command to make a Postscript file of the XFOIL plot window.
+
+HARD
+
+Then open the Postscript and save as PDF.
+Then include in the LaTeX document.

@@ -1,0 +1,129 @@
+% Contains all the macros or newcommands
+
+\newcommand{\avector}[2]{(#1_1,#1_2,\ldots,#1_{#2})}
+
+
+% Expects a CSV file that is similar to XFOIL output, then plot the following
+% CL versus alpha
+
+\newcommand{\oomparepolar}[3]{
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[
+          width=\linewidth, % Scale the plot to \linewidth
+          grid=major, % Display a grid
+          grid style={dashed,gray!30}, % Set the style
+          xlabel=$\alpha$, % Set the labels
+          ylabel=$C_L$,
+          x unit=\si{\degree}, % Set the respective units
+          y unit=\si{},
+          legend style={at={(0.5,-0.2)},anchor=north}, % Put the legend below the plot
+          x tick label style={rotate=90,anchor=east} % Display labels sideways
+        ]
+        \addplot 
+        % add a plot from table; you select the columns by using the actual name in
+        % the .csv file (on top)
+        table[x=alpha,y=CL,col sep=comma] {#1}; 
+		\addplot
+		table[x=alpha,y=CL,col sep=comma] {#2}; 
+        \legend{#1, #2}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{#3}
+  \end{center}
+\end{figure}
+}
+
+% Plot the coefficient versus angle of attack
+% Usage:
+% \makecoeffplot{../HQ34/hq34Polar.csv}{Aerodynamic data of HQ34.}{CL}
+% Plots the *.csv file with the title in the second variable, the CL parameter
+
+
+\newcommand{\makecoeffplot}[3]{
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[
+          width=0.5\linewidth, % Scale the plot to \linewidth
+          grid=major, % Display a grid
+          grid style={dashed,gray!30}, % Set the style
+          xlabel=$\alpha$, % Set the labels
+          ylabel=#3,
+          x unit=\si{\degree}, % Set the respective units
+          y unit=\si{},
+          legend style={at={(0.5,-0.2)},anchor=north}, % Put the legend below the plot
+          x tick label style={rotate=90,anchor=east} % Display labels sideways
+        ]
+        \addplot 
+        % add a plot from table; you select the columns by using the actual name in
+        % the .csv file (on top)
+        table[x=alpha,y=#3,col sep=comma] {#1}; 
+      \end{axis}
+    \end{tikzpicture}
+    \caption{#2}
+  \end{center}
+\end{figure}
+}
+
+
+
+
+% Expects a CSV file with x/c in first column, CSV, then plot the following
+% Cp versus x/c
+
+\newcommand{\oompareCP}[3]{
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[
+          width=\linewidth, % Scale the plot to \linewidth
+          grid=major, % Display a grid
+          grid style={dashed,gray!30}, % Set the style
+          xlabel=$\frac{x}{c}$, % Set the labels
+          ylabel=$C_p$,
+          x unit=\si{}, % Set the respective units
+          y unit=\si{},
+          legend style={at={(0.5,-0.2)},anchor=north}, % Put the legend below the plot
+          x tick label style={rotate=90,anchor=east} % Display labels sideways
+        ]
+        \addplot 
+        % add a plot from table; you select the columns by using the actual name in
+        % the .csv file (on top)
+        table[x=xc,y=Cp,col sep=comma] {#1}; 
+		\addplot
+		table[x=xc,y=Cp,col sep=comma] {#2}; 
+        \legend{#1, #2}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{#3}
+  \end{center}
+\end{figure}
+}
+
+\newcommand{\plotpolar}[2]{
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[
+          width=\linewidth, % Scale the plot to \linewidth
+          grid=major, % Display a grid
+          grid style={dashed,gray!30}, % Set the style
+          xlabel=$C_D$, % Set the labels
+          ylabel=$C_L$,
+          x unit=\si{}, % Set the respective units
+          y unit=\si{},
+          legend style={at={(0.5,-0.2)},anchor=north}, % Put the legend below the plot
+          x tick label style={rotate=90,anchor=east} % Display labels sideways
+        ]
+        \addplot 
+        % add a plot from table; you select the columns by using the actual name in
+        % the .csv file (on top)
+        table[x=CD,y=CL,col sep=comma] {#1}; 
+      \end{axis}
+    \end{tikzpicture}
+    \caption{#2}
+  \end{center}
+\end{figure}
+}

@@ -1,6 +1,38 @@
 \documentclass{article}
 
 % Template from:  https://samrobbins.uk/blog/my-latex-boilerplate
+% Plotting from:  https://latex-tutorial.com/tutorials/pgfplots/
+%
+% Generate output in a terminal using:
+% pdflatex prandtlAirfoils.tex
+%
+% Doen eers hierdie opdragte:
+% Bibliografie vertaling
+%bibtex prandtlAirfoils
+% Die nomenklatuurvertaling
+%makeindex prandtlAirfoils.glo -s nomencl.ist -o prandtlAirfoils.gls
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{natbib}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{siunitx}
+
+
+\pgfplotsset{compat=newest} % Allows to place the legend below plot
+\usepgfplotslibrary{units} % Allows to enter the units nicely
+
+\sisetup{
+  round-mode          = places,
+  round-precision     = 2,
+}
+
+% Include all the macros to plot the polars
+\input{preambleCommands.tex}
+
+
 
 \title{Airfoil analysis on the Prandtl D and the SB-13 aircraft}
 \author{Ni\"el Agenbag}
@@ -18,12 +50,74 @@ Put report data here:
 \section{Introduction}
 
 
+To do:
+Analyse HQ36 and document with XFOIL
+Analyse Prandtl root and tip and document with XFOIL
+Write LaTeX macro to plot drag polar.
+CFD all profiles.  Use OpenFoam
+Insert benchmark results with NACA 23012
+Also plot over windtunnel results of the HQ profiles and the NACA23012
+Compare windtunnel, CFD and XFOIL.  Check how close predictions are.
+
+$\mathbf u=\avector{u}{7}$
+
+
 \section{NACA 23012}
 
 plot airfoil
 plot cl, cd vs alpha
 
 \section{HQ34}
+
+Digitized the HQ34 from .
+
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture}
+	 		\draw[scale=10] plot file{../HQ34/HQ34smoothPic.dat} -- cycle;
+		\end{tikzpicture}
+	\end{center}
+	\caption{Vlerkprofiel van die HQ34.}
+	\label{Fig: Vlerkprofiel HQ34}
+\end{figure}
+
+
+Then smoothed the profile using the MDES command FILT.
+Then ran a polar to obtain the following result:
+Viscous analysis with Reynolds number = 100000.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../HQ34/hq34Polar.pdf}
+\caption{HQ34 polar from digitized profile.}
+\end{figure}
+
+
+
+% Plot the polar plots:
+\makecoeffplot{../HQ34/hq34Polar.csv}{Aerodynamic data of HQ34.}{CL}
+\makecoeffplot{../HQ34/hq34Polar.csv}{Aerodynamic data of HQ34.}{CD}
+\makecoeffplot{../HQ34/hq34Polar.csv}{Aerodynamic data of HQ34.}{CM}
+\makecoeffplot{../HQ34/hq34Polar.csv}{Aerodynamic data of HQ34.}{CDp}
+
+The Akaflieg Braunschweig SB-13 airfoil profile properties are obtained from \cite{SB13Aerodynamics}.
+
+\oomparepolar{../HQ34/hq34Polar.csv}{../HQ34/hq34Polartest.csv}{Compare analysis to test}
+
+These results are unacceptable.  It looks like the flow is tripped by the irregular geometry.  The MDES FILT smoothing seems to be insufficient on its own.  Got better results with spline interpolation of digitized points.
+Run the cscvn spline fit function again on the new digitized points.  Compare the old digitized points results with the new interpolated results.
+
+
+Here is the old Cp comparison:
+
+\oompareCP{../HQ34/HQ34XFOILAlpha45Re1e6.csv}{../HQ34/HQ34windtonnelAlpha45Re1e6.csv}{Compare XFOIL analysis to windtunnel Cp}
+
+
+Here is a drag polar with the bad data:
+
+\plotpolar{../HQ34/hq34Polar.csv}{Polar of the XFOIL data}
+
 \section{HQ36}
 
 
@@ -34,5 +128,10 @@ plot cl, cd vs alpha
 \subsection{CFD}
 
 \section{Prandtl D tip}
+
+
+
+\bibliography{prandtlAirfoils}
+\bibliographystyle{cheming}
 
 \end{document}
