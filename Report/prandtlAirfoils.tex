@@ -75,7 +75,7 @@ Digitized the HQ34 from .
 \begin{figure}[H]
 	\begin{center}
 		\begin{tikzpicture}
-	 		\draw[scale=10] plot file{../HQ34/HQ34smoothPic.dat} -- cycle;
+	 		\draw[scale=10] plot file{../HQ34/mdesOnly/HQ34smoothPic.dat} -- cycle;
 		\end{tikzpicture}
 	\end{center}
 	\caption{Vlerkprofiel van die HQ34.}
@@ -89,21 +89,21 @@ Viscous analysis with Reynolds number = 100000.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{../HQ34/hq34Polar.pdf}
+\includegraphics[width=\textwidth]{../HQ34/mdesOnly/hq34Polar.pdf}
 \caption{HQ34 polar from digitized profile.}
 \end{figure}
 
 
 
 % Plot the polar plots:
-\makecoeffplot{../HQ34/hq34Polar.csv}{Aerodynamic data of HQ34.}{CL}
-\makecoeffplot{../HQ34/hq34Polar.csv}{Aerodynamic data of HQ34.}{CD}
-\makecoeffplot{../HQ34/hq34Polar.csv}{Aerodynamic data of HQ34.}{CM}
-\makecoeffplot{../HQ34/hq34Polar.csv}{Aerodynamic data of HQ34.}{CDp}
+\makecoeffplot{../HQ34/mdesOnly/hq34Polar.csv}{Aerodynamic data of HQ34.}{CL}
+\makecoeffplot{../HQ34/mdesOnly/hq34Polar.csv}{Aerodynamic data of HQ34.}{CD}
+\makecoeffplot{../HQ34/mdesOnly/hq34Polar.csv}{Aerodynamic data of HQ34.}{CM}
+\makecoeffplot{../HQ34/mdesOnly/hq34Polar.csv}{Aerodynamic data of HQ34.}{CDp}
 
 The Akaflieg Braunschweig SB-13 airfoil profile properties are obtained from \cite{SB13Aerodynamics}.
 
-\oomparepolar{../HQ34/hq34Polar.csv}{../HQ34/hq34Polartest.csv}{Compare analysis to test}
+\oomparepolar{../HQ34/mdesOnly/hq34Polar.csv}{../HQ34/hq34Polartest.csv}{Compare analysis to test}
 
 These results are unacceptable.  It looks like the flow is tripped by the irregular geometry.  The MDES FILT smoothing seems to be insufficient on its own.  Got better results with spline interpolation of digitized points.
 Run the cscvn spline fit function again on the new digitized points.  Compare the old digitized points results with the new interpolated results.
@@ -116,7 +116,15 @@ Here is the old Cp comparison:
 
 Here is a drag polar with the bad data:
 
-\plotpolar{../HQ34/hq34Polar.csv}{Polar of the XFOIL data}
+\plotpolar{../HQ34/mdesOnly/hq34Polar.csv}{Polar of the XFOIL data}
+
+When the following zoomed plot is investigated the noise of the digitized profile is visible.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../HQ34/cscvnMdes/HQ34wysGeraas.pdf}
+\caption{Potential issue with HQ34 digitized profile that causes mathematical noise.}
+\end{figure}
 
 \section{HQ36}
 
